@@ -1,8 +1,6 @@
 <html>
 	<head>
-    <title>Your First API Call</title>
-    <link href="http://www.stackmob.com/platform/favicon.ico" type="image/vnd.microsoft.icon" rel="icon" />
-    <link href="http://www.stackmob.com/platform/favicon.png" type="image/png" rel="icon" />
+    <title>Standard Aether</title>
     <link rel="stylesheet" href="index.css" />
 
 		<!--
@@ -27,120 +25,36 @@
       // Copy your init data from here: https://dashboard.stackmob.com/sdks/js/config
       // Your other app information is here: https://dashboard.stackmob.com/settings
       StackMob.init({
-        appName: 'your_app_name',
-        clientSubdomain: 'your_client_subdomain',
-        publicKey: 'your_public_key',
+        appName: 'standardaether',
+        clientSubdomain: 'milesoc',
+        publicKey: 'c37da8d5-dcf7-4d75-b69b-333350fd1cf7',
         apiVersion : 0
       });
 		</script>
 
 		<!--
 		*************************************
-		StackMob JS SDK code that creates and saves a TestObject
+		Login
 		*************************************
 		-->
 		<script type="text/javascript">
-      $(document).ready(function() {
-
-        // Define your class/object
-        var TestObject = StackMob.Model.extend({
-          schemaName : 'testobject' //Tell StackMob to save instances of TestObject to the table "testobject"
-        });
-
-        // Create a local instance of TestObject by passing JSON into the constructor
-        // We have several different field types here as examples.
-        // Fields must be lower case.
-        var to = new TestObject({
-          message : 'This test object instance will show you how StackMob creates your DB from JSON data',
-          integer : 1,
-          decimal : 2.5,
-          istestobject : true,
-          stringarray : ['This', 'is', 'an', 'array', 'of', 'strings'],
-          intarray : [1, 2, 3, 4, 5],
-          decimals : [1.1, 2.2, 3.3],
-          booleans : [true, false, true, false]
-        });
-
-        // Call "create" to fire off the AJAX call to StackMob to create this object instance
-        // If this is the first time StackMob has seen a 'testobject', StackMob will create the database schema automatically for you.
-        // When the server is done, AJAX callbacks are fired: 'success' / 'error'
-        to.create({
-          success : function(model) {
-            // Notice how StackMob auto generated a unique primary key for this object instance under "testobject_id".
-            // Schema primary keys are [schema name]_id
-            // If you specified "testobject_id" in your JSON, StackMob will use your given one instead.
-            console.debug(model.toJSON());
-            $(".error").hide();
-            $(".success").show();
-          },
-          error : function(model, response) {
-            console.debug("Oops there was an error in creating the object.");
-            console.debug("Have you initialized your JS SDK?");
-            console.debug("Are you running this on StackMob's Local Runner?");
-            console.debug("Are you running this on StackMob's GitHub-integrated hosting?")
-            console.debug(response);
-          }
-        });
-      });
+      
+      function login() {
+        var loginform = document.loginform
+        var user - new StackMob.User({username: loginform.username, password: loginform.password})
+        user.login(true, {
+          success: function(model) {window.location='/markets/'},
+          failure: function(model) {alert('Login failed. Try a correct username and password next time')}
+        })
+      }
 
 		</script>
 
 	</head>
 	<body>
-    <div class="success">
-  		<h1>Congratulations!</h1>
-
-  		<h2> You just ran your first JS SDK call! </h2>
-  		<p>
-  			It created a new schema in your server-side StackMob database named
-  			<code>
-  				testobject
-  			</code>
-  			.
-  		</p>
-  		<p>
-  			<a href="https://dashboard.stackmob.com/schemas/" target="_blank" class="button">View your new testobject schema</a>
-  		</p>
-  		<p>
-  			...and it also saved a
-  			<code>
-  				testobject
-  			</code>
-  			object - all in one call.
-  		</p>
-  		<p>
-  			<a href="https://dashboard.stackmob.com/data/browser/testobject" target="_blank" class="button">View the Data</a>
-  		</p>
-  		<p>
-  			View the source, then learn more!
-  			<ul>
-  				<li>
-  					<a href="http://developer.stackmob.com/tutorials/js" target="_blank">JS SDK Tutorials</a>
-  				</li>
-  				<li>
-  					<a href="https://developer.stackmob.com/sdks/js/api" target="_blank">JS SDK API Docs</a>
-  				</li>
-  			</ul>
-      </p>
-      <p>
-  			* All models and collections inherit from <a href="http://backbonejs.org/" target="_blank">Backbone.js</a> and hence share the same methods.  Feel free to optionally <a href="http://backbonejs.org/" target="_blank">learn more about Backbone</a>!
-  		</p>
-      <p>
-        <a href="http://127.0.0.1:4567/more-examples/index.html"><h3>Continue to more examples</h3></a>
-      </p>
-
-    </div>
-
-    <div class="error">
-      <h1>Waiting...</h1>
-      <p>
-        If this message doesn't go away, something might be wrong.
-        Don't forget to <a href="https://dashboard.stackmob.com/sdks/js/config" target="_blank">initialize the JS SDK</a> then view this page 
-        through stackmobserver.py (located in this same directory). <a href="http://www.python.org/getit/" target="_blank">Requires Python 2.7+</a>
-      </p>
-      <p>
-        Please run this in <a href="https://dashboard.stackmob.com/sdks/js/config" target="_blank">StackMob's Local Runner</a> or through <a href="http://www.stackmob.com/devcenter/docs/StackMob-Hosted-HTML5:-GitHub" target="_blank">StackMob's GitHub-integrated hosting</a>.
-      </p>
-    </div>
+    <form name="loginform" onsubmit>
+      Username: <input type="text" name="username"><br>
+      Password: <input type="password" name="password"><br>
+      <input type="submit" value="submit">
 	</body>
 </html>
