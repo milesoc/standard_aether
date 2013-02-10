@@ -38,13 +38,16 @@
 		*************************************
 		-->
 		<script type="text/javascript">
-      
+
       function login() {
         var loginform = document.loginform
-        var user - new StackMob.User({username: loginform.username, password: loginform.password})
+        var user = new StackMob.User({username: loginform.username.value, password: loginform.password.value})
         user.login(true, {
-          success: function(model) {window.location='/markets/'},
-          failure: function(model) {alert('Login failed. Try a correct username and password next time')}
+          success: function(model) {
+            window.location='/markets/'
+          }, error: function(model, response) {
+            alert("Try using correct login information this time, dumbass");
+          }
         })
       }
 
@@ -52,9 +55,10 @@
 
 	</head>
 	<body>
-    <form name="loginform">
-      Username: <input type="text" name="username"><br>
-      Password: <input type="password" name="password"><br>
-      <input type="submit" value="Login" onclick='login()'>
+
+    <form action="#" name="loginform" onsubmit="login(); return false">
+      Username: <input type="text" id="username"><br>
+      Password: <input type="password" id="password"><br>
+      <input type="submit" value="Login">
 	</body>
 </html>
