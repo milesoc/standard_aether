@@ -32,8 +32,11 @@
       apiVersion : 0
     });
 
+    var Market = StackMob.Model.extend({
+      schemaName: 'market' //this maps a schema at https://dashboard.stackmob.com/schemas/
+    });
 
-    //redirect to login if not logged in
+     //redirect to login if not logged in
     console.log("test")
     StackMob.isLoggedIn({
       yes: function(username) {
@@ -58,6 +61,7 @@
         {},
         'GET',
         {success: function(result) {
+          console.log("asdf")
           var markets = result.markets
           console.log(markets.length + " market(s)")
 
@@ -70,12 +74,23 @@
             nameCell.appendChild(nameText)
 
             priceCell = row.insertCell(-1)
-            price = document.createTextNode(market.price)
+            price = document.createElement("input")
+            price.setAttribute("value", market.price)
+            price.id = market.id
             priceCell.appendChild(price)
 
             trendCell = row.insertCell(-1)
             trend = document.createTextNode(market.trend)
+            if (market.trend > 0)
+              trendCell.className = "positive"
             trendCell.appendChild(trend)
+
+            updateCell = row.insertCell(-1)
+            update = document.createElement("submit")
+            update.setAttribute("value", "Update Price")
+            update.onclick = function() {
+              updatePrice(document.getElementById(market.id).value)
+            }
 
             table.appendChild(row)
           }
@@ -83,6 +98,19 @@
       )
     }
 
+    function create() {
+      var commodity = document.marketsform.newcommodity.value
+      var price = parseInt(document.marketsform.newprice.value)
+      var market = new Market({'commodity': commodity, 'price': price, 'price_history': [price]})
+      market.create({
+        success: function(model) {
+          populate()
+        }, failure: function(model, response) {
+          alert(response)
+        }
+      })
+      return false
+    }
 
     $(document).ready(function() {
       populate()
@@ -94,17 +122,27 @@
 <body>
 
   <h1>Markets</h1><br>
+  <form name="marketsform">
   <table border=1 class="data">
     <thead>
-      <tr class="table_head">
+      <tr>
         <td>Commodity</td>
         <td>Price</td>
         <td>Price Trend</td>
+        <td>Update</td>
       </tr>
     </thead>
     <tbody id="markets_info">
     </tbody>
+    <tfoot>
+      <tr>
+        <td><input type="text" name="newcommodity"></td>
+        <td><input type="text" name="newprice"></td>
+        <td><input type="submit" onclick="create(); return false" action='#' value="Create New Market"></td>
+      </tr>
+    </tfoot>
   </table>
+  </form>
 </body>
 
 </html>
