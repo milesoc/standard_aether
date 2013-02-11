@@ -42,7 +42,7 @@
     function login() {
       var loginform = document.loginform
       var user = new StackMob.User({username: loginform.username.value, password: loginform.password.value})
-      user.login(false, {
+      user.login(true, {
         success: function(model) {
           window.location='/markets/'
         }, error: function(model, response) {
