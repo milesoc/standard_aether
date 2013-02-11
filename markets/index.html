@@ -24,7 +24,7 @@
       var market = new Market({'commodity': commodity, 'price': price, 'price_history': [price]})
       market.create({
         success: function(model) {
-          populate()
+          populateTable()
         }, failure: function(model, response) {
           alert(response)
         }
@@ -33,12 +33,14 @@
     }
 
     function update(idToUpdate) {
-      var newPrice = parseInt(document.getElementById(idToUpdate+"price"))
+      console.log(idToUpdate+"price")
+      console.log(document.getElementById(idToUpdate+"price").value)
+      var newPrice = parseInt(document.getElementById(idToUpdate+"price").value)
       var market = new Market({'market_id': idToUpdate, 'price': newPrice})
       market.save()
       market.appendAndSave("price_history", [newPrice], {
         success: function(model) {
-          populate()
+          populateTable()
         }
       })
       return false   

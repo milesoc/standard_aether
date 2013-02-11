@@ -74,7 +74,8 @@ function populate(tableBodyId, method, linkUrl, cells, updateFn) {
             case 'input':
               var input = document.createElement("input")
               input.setAttribute("value", cellValue)
-              input.id = obj.id+cellValue
+              input.id = obj.id+cellName
+              console.log(obj.id+cellName)
               newCell.appendChild(input)
               break;
             default:
