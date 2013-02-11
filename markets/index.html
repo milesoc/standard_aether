@@ -1,1 +1,110 @@
-<html><head><title>ammama</title></head><body>Hi!</body></html>
+<html>
+
+<head>
+  <title>Standard Aether</title>
+  <link rel="stylesheet" href="../index.css" />
+
+  <!--
+  *************************************
+  STACKMOB JS SDK DEPENDENCIES
+  Include these in your pages where you want to use the StackMob js sdk
+  *************************************
+  -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.7.0-bundled-min.js"></script>
+
+  <!--
+  *************************************
+  INITIALIZE THE JS SDK BELOW
+
+  Copy/Paste the init method from:
+  https://dashboard.stackmob.com/sdks/js/config
+  *************************************
+  -->
+  <script type="text/javascript">
+    // Initialize StackMob object
+    // Copy your init data from here: https://dashboard.stackmob.com/sdks/js/config
+    // Your other app information is here: https://dashboard.stackmob.com/settings
+    StackMob.init({
+      appName: 'standardaether',
+      clientSubdomain: 'milesoc',
+      publicKey: 'c37da8d5-dcf7-4d75-b69b-333350fd1cf7',
+      apiVersion : 0
+    });
+
+
+    //redirect to login if not logged in
+    console.log("test")
+    StackMob.isLoggedIn({
+      yes: function(username) {
+        console.log(username + " is logged in.");
+      },
+      no: function() {
+        window.location("../");
+      },
+      error: function() {
+        window.location("../");
+      }
+    });
+  </script>
+
+  <!-- Markets page -->
+  <script type="text/javascript">
+    function populate() {
+      console.log("Retrieving Markets")
+      var table = document.getElementById("markets_info")
+      //retrieve the markets
+      StackMob.customcode('markets',
+        {},
+        'GET',
+        {success: function(result) {
+          var markets = result.markets
+          console.log(markets.length + " market(s)")
+
+          for(var marketsIndex = 0; marketsIndex < markets.length; marketsIndex++) {
+            var market = markets[marketsIndex]
+            row = table.insertRow(-1)
+            
+            nameCell = row.insertCell(-1)
+            nameText = document.createTextNode(market.commodity)
+            nameCell.appendChild(nameText)
+
+            priceCell = row.insertCell(-1)
+            price = document.createTextNode(market.price)
+            priceCell.appendChild(price)
+
+            trendCell = row.insertCell(-1)
+            trend = document.createTextNode(market.trend)
+            trendCell.appendChild(trend)
+
+            table.appendChild(row)
+          }
+        }}
+      )
+    }
+
+
+    $(document).ready(function() {
+      populate()
+    })
+  </script>
+
+</head>
+
+<body>
+
+  <h1>Markets</h1><br>
+  <table border=1 class="data">
+    <thead>
+      <tr class="table_head">
+        <td>Commodity</td>
+        <td>Price</td>
+        <td>Price Trend</td>
+      </tr>
+    </thead>
+    <tbody id="markets_info">
+    </tbody>
+  </table>
+</body>
+
+</html>
