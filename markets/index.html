@@ -12,91 +12,11 @@
   -->
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.7.0-bundled-min.js"></script>
-
-  <!--
-  *************************************
-  INITIALIZE THE JS SDK BELOW
-
-  Copy/Paste the init method from:
-  https://dashboard.stackmob.com/sdks/js/config
-  *************************************
-  -->
-  <script type="text/javascript">
-    // Initialize StackMob object
-    // Copy your init data from here: https://dashboard.stackmob.com/sdks/js/config
-    // Your other app information is here: https://dashboard.stackmob.com/settings
-    StackMob.init({
-      appName: 'standardaether',
-      clientSubdomain: 'milesoc',
-      publicKey: 'c37da8d5-dcf7-4d75-b69b-333350fd1cf7',
-      apiVersion : 0
-    });
-
-    var Market = StackMob.Model.extend({
-      schemaName: 'market' //this maps a schema at https://dashboard.stackmob.com/schemas/
-    });
-
-     //redirect to login if not logged in
-    console.log("test")
-    StackMob.isLoggedIn({
-      yes: function(username) {
-        console.log(username + " is logged in.");
-      },
-      no: function() {
-        window.location("../");
-      },
-      error: function() {
-        window.location("../");
-      }
-    });
-  </script>
+  <script type="text/javascript" src="../common.js"></script>
 
   <!-- Markets page -->
   <script type="text/javascript">
-    function populate() {
-      console.log("Retrieving Markets")
-      var table = document.getElementById("markets_info")
-      //retrieve the markets
-      StackMob.customcode('markets',
-        {},
-        'GET',
-        {success: function(result) {
-          console.log("asdf")
-          var markets = result.markets
-          console.log(markets.length + " market(s)")
-
-          for(var marketsIndex = 0; marketsIndex < markets.length; marketsIndex++) {
-            var market = markets[marketsIndex]
-            row = table.insertRow(-1)
-            
-            nameCell = row.insertCell(-1)
-            nameText = document.createTextNode(market.commodity)
-            nameCell.appendChild(nameText)
-
-            priceCell = row.insertCell(-1)
-            price = document.createElement("input")
-            price.setAttribute("value", market.price)
-            price.id = market.id
-            priceCell.appendChild(price)
-
-            trendCell = row.insertCell(-1)
-            trend = document.createTextNode(market.trend)
-            if (market.trend > 0)
-              trendCell.className = "positive"
-            trendCell.appendChild(trend)
-
-            updateCell = row.insertCell(-1)
-            update = document.createElement("submit")
-            update.setAttribute("value", "Update Price")
-            update.onclick = function() {
-              updatePrice(document.getElementById(market.id).value)
-            }
-
-            table.appendChild(row)
-          }
-        }}
-      )
-    }
+    
 
     function create() {
       var commodity = document.marketsform.newcommodity.value
@@ -112,8 +32,32 @@
       return false
     }
 
+    function update(idToUpdate) {
+      var newPrice = parseInt(document.getElementById(idToUpdate+"price"))
+      var market = new Market({'market_id': idToUpdate, 'price': newPrice})
+      market.save()
+      market.appendAndSave("price_history", [newPrice], {
+        success: function(model) {
+          populate()
+        }
+      })
+      return false   
+    }
+
+    function populateTable() {
+      console.log("Calling populate")
+      populate("markets_info", 
+        "markets", 
+        "detail.html", 
+        [{name: "commodity", type: "link"},
+          {name: "price", type: "input"},
+          {name: "trend", type: "trend"}],
+        update
+      );
+    }
+
     $(document).ready(function() {
-      populate()
+      populateTable()
     })
   </script>
 
@@ -122,8 +66,7 @@
 <body>
 
   <h1>Markets</h1><br>
-  <form name="marketsform">
-  <table border=1 class="data">
+  <table border=1 class="data" id="markets_table">
     <thead>
       <tr>
         <td>Commodity</td>
@@ -135,14 +78,15 @@
     <tbody id="markets_info">
     </tbody>
     <tfoot>
-      <tr>
-        <td><input type="text" name="newcommodity"></td>
-        <td><input type="text" name="newprice"></td>
-        <td><input type="submit" onclick="create(); return false" action='#' value="Create New Market"></td>
-      </tr>
+      <form name="marketsform">
+        <tr>
+          <td><input type="text" name="newcommodity"></td>
+          <td><input type="text" name="newprice"></td>
+          <td><input type="submit" onclick="create(); return false" action='#' value="Create New Market"></td>
+        </tr>
+      </form>
     </tfoot>
   </table>
-  </form>
 </body>
 
 </html>

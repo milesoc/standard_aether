@@ -3,24 +3,24 @@
   <title>Standard Aether</title>
   <link rel="stylesheet" href="index.css" />
 
-	<!--
-	*************************************
-	STACKMOB JS SDK DEPENDENCIES
-	Include these in your pages where you want to use the StackMob js sdk
-	*************************************
-	-->
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.7.0-bundled-min.js"></script>
+  <!--
+  *************************************
+  STACKMOB JS SDK DEPENDENCIES
+  Include these in your pages where you want to use the StackMob js sdk
+  *************************************
+  -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.7.0-bundled-min.js"></script>
 
-	<!--
-	*************************************
-	INITIALIZE THE JS SDK BELOW
+  <!--
+  *************************************
+  INITIALIZE THE JS SDK BELOW
 
-	Copy/Paste the init method from:
-	https://dashboard.stackmob.com/sdks/js/config
-	*************************************
-	-->
-	<script type="text/javascript">
+  Copy/Paste the init method from:
+  https://dashboard.stackmob.com/sdks/js/config
+  *************************************
+  -->
+  <script type="text/javascript">
     // Initialize StackMob object
     // Copy your init data from here: https://dashboard.stackmob.com/sdks/js/config
     // Your other app information is here: https://dashboard.stackmob.com/settings
@@ -30,19 +30,19 @@
       publicKey: 'c37da8d5-dcf7-4d75-b69b-333350fd1cf7',
       apiVersion : 0
     });
-	</script>
+  </script>
 
-	<!--
-	*************************************
-	Login
-	*************************************
-	-->
-	<script type="text/javascript">
+  <!--
+  *************************************
+  Login
+  *************************************
+  -->
+  <script type="text/javascript">
 
     function login() {
       var loginform = document.loginform
       var user = new StackMob.User({username: loginform.username.value, password: loginform.password.value})
-      user.login(true, {
+      user.login(false, {
         success: function(model) {
           window.location='/markets/'
         }, error: function(model, response) {
@@ -51,7 +51,7 @@
       })
     }
 
-	</script>
+  </script>
 
 </head>
 <body>

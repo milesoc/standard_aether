@@ -1,10 +1,25 @@
 body {
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .positive {
-    color: #009900;
+  color: #009900;
 }
 .negative {
-    color: #FF0000;
+  color: #FF0000;
+}
+
+.button {
+  background-color: #dcdcdc;
+  border: 1px solid #666;
+  color:#000;
+  text-decoration:none;
+}
+
+.button:hover {
+  background-color: #cbcbcb;
+  border: 1px solid #666;
+  color:#000;
+  text-decoration:none;
+  cursor:pointer;
 }
