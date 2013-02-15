@@ -21,10 +21,22 @@
     function create() {
       var commodity = document.marketsform.newcommodity.value
       var price = parseInt(document.marketsform.newprice.value)
-      var market = new Market({'commodity': commodity, 'price': price, 'price_history': [price]})
+      var market = new Market({'commodity': commodity})
       market.create({
         success: function(model) {
-          populateTable()
+          console.log(model)
+          console.log("market " + model.id)
+          console.log("market_name " + model.commodity)
+          console.log("price " + price)
+          //create the first price 
+          var priceModel = new Price({'price': price, 'market': model.id})
+          priceModel.create({
+            success: function(model) {
+              populateTable()
+            }, failure: function(model, response) {
+              alert(response)
+            }
+          })
         }, failure: function(model, response) {
           alert(response)
         }

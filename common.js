@@ -12,6 +12,10 @@ var Market = StackMob.Model.extend({
   schemaName: 'market' //this maps a schema at https://dashboard.stackmob.com/schemas/
 });
 
+var Price = StackMob.Model.extend({
+  schemaName: 'price' //this maps a schema at https://dashboard.stackmob.com/schemas/
+});
+
  //redirect to login if not logged in
 console.log("test")
 StackMob.isLoggedIn({
@@ -28,7 +32,7 @@ StackMob.isLoggedIn({
 
 
 function populate(tableBodyId, method, linkUrl, cells, updateFn) {
-  console.log("Retrieving Markets")
+  console.log("calling custom code to populate table")
   //retrieve the markets
   StackMob.customcode(method,
     {},
