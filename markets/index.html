@@ -24,10 +24,6 @@
       var market = new Market({'commodity': commodity})
       market.create({
         success: function(model) {
-          console.log(model)
-          console.log("market " + model.id)
-          console.log("market_name " + model.commodity)
-          console.log("price " + price)
           //create the first price 
           var priceModel = new Price({'price': price, 'market': model.id})
           priceModel.create({
@@ -48,6 +44,7 @@
       console.log(idToUpdate+"price")
       console.log(document.getElementById(idToUpdate+"price").value)
       var newPrice = parseInt(document.getElementById(idToUpdate+"price").value)
+      
       var market = new Market({'market_id': idToUpdate, 'price': newPrice})
       market.save()
       market.appendAndSave("price_history", [newPrice], {
