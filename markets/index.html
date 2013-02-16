@@ -45,11 +45,12 @@
       console.log(document.getElementById(idToUpdate+"price").value)
       var newPrice = parseInt(document.getElementById(idToUpdate+"price").value)
       
-      var market = new Market({'market_id': idToUpdate, 'price': newPrice})
-      market.save()
-      market.appendAndSave("price_history", [newPrice], {
+      var priceObj = new Price({'market': idToUpdate, 'price': newPrice})
+      priceObj.create({
         success: function(model) {
           populateTable()
+        }, failure: function(model, response) {
+          alert(response)
         }
       })
       return false   
