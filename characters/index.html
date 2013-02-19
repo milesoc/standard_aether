@@ -24,7 +24,7 @@
         alert("No character name")
         return false
       }
-      var newMoney = parseInt(document.character_create.newmoney.value)
+      var newMoney = parseInt(getNumber(document.character_create.newmoney.value))
       var charObj = new Character({'name': name, 'money': newMoney})
       charObj.create({
         success: function(model) {
@@ -40,7 +40,7 @@
     function update(idToUpdate) {
       console.log(idToUpdate+"money")
       console.log(document.getElementById(idToUpdate+"money").value)
-      var newMoney = parseInt(document.getElementById(idToUpdate+"money").value)
+      var newMoney = parseInt(getNumber(document.getElementById(idToUpdate+"money").value))
       
       var charObj = new Character({'character_id': idToUpdate, 'money': newMoney})
       charObj.save({

@@ -37,7 +37,7 @@
     }
 
     function update(idToUpdate) {
-      var newQuantity = parseInt(document.getElementById(idToUpdate+"quantity").value)
+      var newQuantity = parseInt(getNumber(document.getElementById(idToUpdate+"quantity").value))
       
       var marketObj = new ActiveMarket({'active_market_id': idToUpdate, 'quantity': newQuantity})
       marketObj.save({

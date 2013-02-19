@@ -24,7 +24,7 @@
         alert("No market name")
         return false
       }
-      var price = parseInt(document.marketsform.newprice.value)
+      var price = parseInt(getNumber(document.marketsform.newprice.value))
       var market = new Market({'commodity': commodity})
       market.create({
         success: function(model) {
@@ -47,7 +47,7 @@
     function update(idToUpdate) {
       console.log(idToUpdate+"price")
       console.log(document.getElementById(idToUpdate+"price").value)
-      var newPrice = parseInt(document.getElementById(idToUpdate+"price").value)
+      var newPrice = parseInt(getNumber(document.getElementById(idToUpdate+"price").value))
       
       var priceObj = new Price({'market': idToUpdate, 'price': newPrice})
       priceObj.create({
