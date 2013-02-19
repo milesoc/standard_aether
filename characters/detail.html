@@ -1,0 +1,98 @@
+<html>
+
+<head>
+  <title>Standard Aether</title>
+  <link rel="stylesheet" href="../index.css" />
+
+  <!--
+  *************************************
+  STACKMOB JS SDK DEPENDENCIES
+  Include these in your pages where you want to use the StackMob js sdk
+  *************************************
+  -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.7.0-bundled-min.js"></script>
+  <script type="text/javascript" src="../common.js"></script>
+
+  <!-- Characters page -->
+  <script type="text/javascript">
+    
+    var currentCharId = getParameterByName("id")
+
+    function addMarket() {
+      var marketId = document.add_market.markettoadd.value
+      if (marketId == null || marketId == "")
+        return false
+      console.log(marketId)
+      console.log(currentCharId)
+      var marketObj = new ActiveMarket({"market": marketId, "character": currentCharId, "quantity":0})
+      marketObj.create({
+        success: function(model) {
+          populateTable()
+        }, failure: function(model, response) {
+          alert(response)
+        }
+      })
+      return false
+    }
+
+    function update(idToUpdate) {
+      var newQuantity = parseInt(document.getElementById(idToUpdate+"quantity").value)
+      
+      var marketObj = new ActiveMarket({'active_market_id': idToUpdate, 'quantity': newQuantity})
+      marketObj.save({
+        success: function(model) {
+          populateTable()
+        }, failure: function(model, response) {
+          alert(response)
+        }
+      })
+      return false   
+    }
+
+    function populateTable() {
+      console.log("Calling populate")
+      populate("markets_info", 
+        "character_markets",
+        currentCharId, 
+        "detail.html", 
+        [{name: "market", type: "text"},
+          {name: "quantity", type: "input"},
+          {name: "invested", type: "text"}],
+        update
+      );
+    }
+
+    $(document).ready(function() {
+      populateTable()
+    })
+  </script>
+
+</head>
+
+<body>
+<a href="../index.html">Login Again!</a><br>
+<a href="../markets/">Markets</a><br>
+<a href="../characters/">Characters</a><br>
+
+  <h1>Character Details</h1><br>
+  <table border=1 class="data" id="markets_table">
+    <thead>
+      <tr>
+        <td>Market</td>
+        <td>Quantity</td>
+        <td>Kinah Invested</td>
+        <td>Update</td>
+      </tr>
+    </thead>
+    <tbody id="markets_info">
+    </tbody>
+  </table>
+
+  <form name="add_market"><input type="text" name="markettoadd"><input type="submit" onclick="addMarket(); return false" value="Add Market ID"></form>
+</body>
+<script type="text/javascript">
+checkLogin();
+</script>
+
+</html>

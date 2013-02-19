@@ -1,0 +1,108 @@
+<html>
+
+<head>
+  <title>Standard Aether</title>
+  <link rel="stylesheet" href="../index.css" />
+
+  <!--
+  *************************************
+  STACKMOB JS SDK DEPENDENCIES
+  Include these in your pages where you want to use the StackMob js sdk
+  *************************************
+  -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.7.0-bundled-min.js"></script>
+  <script type="text/javascript" src="../common.js"></script>
+
+  <!-- Characters page -->
+  <script type="text/javascript">
+    
+
+    function create() {
+      var name = document.character_create.newname.value
+      if (name == null || name == "") {
+        alert("No character name")
+        return false
+      }
+      var newMoney = parseInt(document.character_create.newmoney.value)
+      var charObj = new Character({'name': name, 'money': newMoney})
+      charObj.create({
+        success: function(model) {
+          populateTable()
+        }, failure: function(model, response) {
+          alert(response)
+        }
+      })
+
+      return false
+    }
+
+    function update(idToUpdate) {
+      console.log(idToUpdate+"money")
+      console.log(document.getElementById(idToUpdate+"money").value)
+      var newMoney = parseInt(document.getElementById(idToUpdate+"money").value)
+      
+      var charObj = new Character({'character_id': idToUpdate, 'money': newMoney})
+      charObj.save({
+        success: function(model) {
+          populateTable()
+        }, failure: function(model, response) {
+          alert(response)
+        }
+      })
+      return false   
+    }
+
+    function populateTable() {
+      console.log("Calling populate")
+      populate("characters_info", 
+        "characters", 
+        null,
+        "detail.html", 
+        [{name: "name", type: "link"},
+          {name: "money", type: "input"},
+          {name: "invested", type: "text"}],
+        update
+      );
+    }
+
+    $(document).ready(function() {
+      populateTable()
+    })
+  </script>
+
+</head>
+
+<body>
+<a href="../index.html">Login Again!</a><br>
+<a href="../markets/">Markets</a><br>
+<a href="../characters/">Characters</a><br>
+
+  <h1>Characters</h1><br>
+  <table border=1 class="data" id="characters_table">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Kinah</td>
+        <td>Kinah Invested</td>
+        <td>Update</td>
+      </tr>
+    </thead>
+    <tbody id="characters_info">
+    </tbody>
+    <tfoot>
+      <form name="character_create">
+        <tr>
+          <td><input type="text" name="newname"></td>
+          <td><input type="text" name="newmoney"></td>
+          <td><input type="submit" onclick="create(); return false" action='#' value="Create New Character"></td>
+        </tr>
+      </form>
+    </tfoot>
+  </table>
+</body>
+<script type="text/javascript">
+checkLogin();
+</script>
+
+</html>
