@@ -78,8 +78,12 @@ function populate(tableBodyId, method, idToPass, linkUrl, cells, updateFn) {
               var textNode = document.createTextNode(cellValue)
               newCell.appendChild(textNode)
               break;
+            case 'number': 
+              var textNode = document.createTextNode((cellValue).toLocaleString())
+              newCell.appendChild(textNode)
+              break;
             case 'trend':
-              var trend = document.createTextNode(cellValue)
+              var trend = document.createTextNode((cellValue).toLocaleString())
               console.log(cellValue > 0)
               if (cellValue > 0)
                 newCell.className = "positive"

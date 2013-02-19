@@ -69,8 +69,8 @@
         [{name: "commodity", type: "link"},
           {name: "price", type: "input"},
           {name: "trend", type: "trend"},
-          {name: "quantity", type: "text"},
-          {name: "investment", type: "text"}],
+          {name: "quantity", type: "number"},
+          {name: "investment", type: "number"}],
         update
       );
 
@@ -78,7 +78,7 @@
         {},
         'GET',
         {success: function(result) {
-          document.getElementById("net_worth").innerHTML = (result.worth/1000000)+"m"
+          document.getElementById("net_worth").innerHTML = (result.worth/1000000).toLocaleString()+"m"
         }})
     }
 
