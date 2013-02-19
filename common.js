@@ -9,33 +9,45 @@ StackMob.init({
 });
 
 var Market = StackMob.Model.extend({
-  schemaName: 'market' //this maps a schema at https://dashboard.stackmob.com/schemas/
+  schemaName: 'market'
 });
 
 var Price = StackMob.Model.extend({
-  schemaName: 'price' //this maps a schema at https://dashboard.stackmob.com/schemas/
+  schemaName: 'price' 
 });
 
- //redirect to login if not logged in
-console.log("test")
-StackMob.isLoggedIn({
-  yes: function(username) {
-    console.log(username + " is logged in.");
-  },
-  no: function() {
-    window.location("../");
-  },
-  error: function() {
-    window.location("../");
-  }
-});
+var Character = StackMob.Model.extend({
+  schemaName: 'character'
+})
 
+var ActiveMarket = StackMob.Model.extend({
+  schemaName: 'active_market'
+})
 
-function populate(tableBodyId, method, linkUrl, cells, updateFn) {
+function checkLogin() {
+  //redirect to login if not logged in
+  console.log("test")
+  StackMob.isLoggedIn({
+    yes: function(username) {
+      console.log(username + " is logged in.");
+    },
+    no: function() {
+      window.location("../");
+    },
+    error: function() {
+      window.location("../");
+    }
+  })
+}
+
+function populate(tableBodyId, method, idToPass, linkUrl, cells, updateFn) {
   console.log("calling custom code to populate table")
+  var params = {}
+  if (idToPass != null)
+    params = {'id': idToPass}
   //retrieve the markets
   StackMob.customcode(method,
-    {},
+    params,
     'GET',
     {success: function(result) {
       var oldBody = document.getElementById(tableBodyId)
@@ -101,4 +113,17 @@ function populate(tableBodyId, method, linkUrl, cells, updateFn) {
       oldBody.parentNode.replaceChild(newBody, oldBody)
       newBody.id = tableBodyId
     }});
+}
+
+// http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
+function getParameterByName( name )
+{
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  if( results == null )
+    return "";
+  else
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
 }

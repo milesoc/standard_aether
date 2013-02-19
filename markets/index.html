@@ -20,6 +20,10 @@
 
     function create() {
       var commodity = document.marketsform.newcommodity.value
+      if (commodity == null || commodity == "") {
+        alert("No market name")
+        return false
+      }
       var price = parseInt(document.marketsform.newprice.value)
       var market = new Market({'commodity': commodity})
       market.create({
@@ -60,10 +64,13 @@
       console.log("Calling populate")
       populate("markets_info", 
         "markets", 
+        null,
         "detail.html", 
         [{name: "commodity", type: "link"},
           {name: "price", type: "input"},
-          {name: "trend", type: "trend"}],
+          {name: "trend", type: "trend"},
+          {name: "quantity", type: "text"},
+          {name: "investment", type: "text"}],
         update
       );
     }
@@ -76,6 +83,10 @@
 </head>
 
 <body>
+  
+<a href="../index.html">Login Again!</a><br>
+<a href="../markets/">Markets</a><br>
+<a href="../characters/">Characters</a><br>
 
   <h1>Markets</h1><br>
   <table border=1 class="data" id="markets_table">
@@ -84,6 +95,8 @@
         <td>Commodity</td>
         <td>Price</td>
         <td>Price Trend</td>
+        <td>Qty. Invested</td>
+        <td>Kinah Invested</td>
         <td>Update</td>
       </tr>
     </thead>
@@ -100,5 +113,7 @@
     </tfoot>
   </table>
 </body>
-
+<script type="text/javascript">
+checkLogin();
+</script>
 </html>
