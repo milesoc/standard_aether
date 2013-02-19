@@ -41,7 +41,7 @@ function checkLogin() {
 }
 
 function getNumber(str) {
-  return Integer.parseInt(str.replace(/\,/g,''))
+  return parseInt(str.replace(/\,/g,''))
 }
 
 function populate(tableBodyId, method, idToPass, linkUrl, cells, updateFn) {
