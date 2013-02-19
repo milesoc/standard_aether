@@ -73,6 +73,13 @@
           {name: "investment", type: "text"}],
         update
       );
+
+      StackMob.customcode("net_worth",
+        {},
+        'GET',
+        {success: function(result) {
+          document.getElementById("net_worth").innerHTML = result.worth
+        }})
     }
 
     $(document).ready(function() {
@@ -83,7 +90,7 @@
 </head>
 
 <body>
-  
+
 <a href="../index.html">Login Again!</a><br>
 <a href="../markets/">Markets</a><br>
 <a href="../characters/">Characters</a><br>
@@ -91,6 +98,10 @@
   <h1>Markets</h1><br>
   <table border=1 class="data" id="markets_table">
     <thead>
+      <tr>
+        <td colspan=3>Net Worth:</td>
+        <td colspan=3 id="net_worth">0</td>
+      </tr>
       <tr>
         <td>Commodity</td>
         <td>Price</td>
