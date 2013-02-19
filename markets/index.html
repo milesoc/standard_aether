@@ -78,7 +78,7 @@
         {},
         'GET',
         {success: function(result) {
-          document.getElementById("net_worth").innerHTML = result.worth
+          document.getElementById("net_worth").innerHTML = (result.worth/1000000)+"m"
         }})
     }
 
