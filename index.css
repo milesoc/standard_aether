@@ -2,14 +2,19 @@ body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
-table { margin: 1em; border-collapse: collapse; }
-td, th { padding: .3em; border: 1px #ccc solid; }
-
-tbody tr:hover {
-  background-color:#EEEEEE;
+table { 
+  margin: 1em; 
+  border-collapse: collapse; 
 }
 
+td, th { 
+  padding: .3em; 
+  border: 1px #CCC solid; 
+}
 
+tbody tr:hover {
+  background-color: #EEE;
+}
 
 .positive {
   color: #009900;
@@ -19,16 +24,20 @@ tbody tr:hover {
 }
 
 .button {
-  background-color: #dcdcdc;
-  border: 1px solid #666;
-  color:#000;
-  text-decoration:none;
+  background-color: #ccc;
+  padding: .3em;
+  color: #000;
+  text-decoration: none;
 }
 
 .button:hover {
-  background-color: #cbcbcb;
-  border: 1px solid #666;
-  color:#000;
-  text-decoration:none;
-  cursor:pointer;
+  background-color: #999;
+  cursor: pointer;
+}
+
+#net_worth {
+  color: #090;
+  background-color: #EEE;
+  font-weight: bold;
+  font-size: 1.5em;
 }

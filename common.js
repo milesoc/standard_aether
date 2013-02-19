@@ -141,6 +141,6 @@ function netWorth() {
     {},
     'GET',
     {success: function(result) {
-      document.getElementById("net_worth").innerHTML = (Math.floor(result.worth/1000000)).toLocaleString()+"m"
+      document.getElementById("net_worth").innerHTML = (Math.floor(result.worth/10000)/100).toLocaleString()+"m"
     }})
 }
