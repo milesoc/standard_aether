@@ -60,10 +60,12 @@
           {name: "quantity", type: "input"},
           {name: "invested", type: "text"}],
         update
-      );
+      )
+      netWorth()
     }
 
     $(document).ready(function() {
+      checkLogin()
       populateTable()
     })
   </script>
@@ -79,6 +81,10 @@
   <table border=1 class="data" id="markets_table">
     <thead>
       <tr>
+        <td colspan=3>Legion Net Worth:</td>
+        <td colspan=3 id="net_worth">0</td>
+      </tr>
+      <tr>
         <td>Market</td>
         <td>Quantity</td>
         <td>Kinah Invested</td>
@@ -91,8 +97,5 @@
 
   <form name="add_market"><input type="text" name="markettoadd"><input type="submit" onclick="addMarket(); return false" value="Add Market ID"></form>
 </body>
-<script type="text/javascript">
-checkLogin();
-</script>
 
 </html>

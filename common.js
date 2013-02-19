@@ -40,6 +40,10 @@ function checkLogin() {
   })
 }
 
+function getNumber(str) {
+  return Integer.parseInt(str.replace(/\,/g,''))
+}
+
 function populate(tableBodyId, method, idToPass, linkUrl, cells, updateFn) {
   console.log("calling custom code to populate table")
   var params = {}
@@ -130,4 +134,13 @@ function getParameterByName( name )
     return "";
   else
     return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function netWorth() {
+  StackMob.customcode("net_worth",
+    {},
+    'GET',
+    {success: function(result) {
+      document.getElementById("net_worth").innerHTML = (Math.floor(result.worth/1000000)).toLocaleString()+"m"
+    }})
 }

@@ -11,7 +11,7 @@
   *************************************
   -->
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-  <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.7.0-bundled-min.js"></script>
+  <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.8.0-bundled-min.js"></script>
   <script type="text/javascript" src="../common.js"></script>
 
   <!-- Characters page -->
@@ -63,10 +63,12 @@
           {name: "money", type: "input"},
           {name: "invested", type: "number"}],
         update
-      );
+      )
+      netWorth()
     }
 
     $(document).ready(function() {
+      checkLogin()
       populateTable()
     })
   </script>
@@ -81,6 +83,10 @@
   <h1>Characters</h1><br>
   <table border=1 class="data" id="characters_table">
     <thead>
+      <tr>
+        <td colspan=3>Net Worth:</td>
+        <td colspan=3 id="net_worth">0</td>
+      </tr>
       <tr>
         <td>Name</td>
         <td>Kinah</td>
@@ -101,8 +107,5 @@
     </tfoot>
   </table>
 </body>
-<script type="text/javascript">
-checkLogin();
-</script>
 
 </html>
