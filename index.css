@@ -41,3 +41,24 @@ tbody tr:hover {
   font-weight: bold;
   font-size: 1.5em;
 }
+
+.good_net_worth {
+  color: #090;
+  background-color: #EEE;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.med_net_worth {
+  color: #C90;
+  background-color: #EEE;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.bad_net_worth {
+  color: #C00;
+  background-color: #EEE;
+  font-weight: bold;
+  font-size: 1.5em;
+}

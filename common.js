@@ -141,6 +141,18 @@ function netWorth() {
     {},
     'GET',
     {success: function(result) {
-      document.getElementById("net_worth").innerHTML = (Math.floor(result.worth/10000)/100).toLocaleString()+" Million"
+      console.log(result.worth)
+      console.log(result.money + " money")
+      var netWorth = (Math.floor(result.worth/10000)/100)
+      document.getElementById("net_worth").innerHTML = netWorth.toLocaleString()+" Million"
+      var liquidity = Math.floor(100*result.money/result.worth)
+      var liqTd = document.getElementById("liquidity")
+      if (liquidity >= 30)
+        liqTd.className = "good_net_worth"
+      else if (liquidity >= 15)
+        liqTd.className = "med_net_worth"
+      else
+        liqTd.className = "bad_net_worth"
+      liqTd.innerHTML = liquidity + "%"
     }})
 }
