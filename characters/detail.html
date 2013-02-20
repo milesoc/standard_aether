@@ -19,12 +19,33 @@
     
     var currentCharId = getParameterByName("id")
 
-    function addMarket() {
-      var marketId = document.add_market.markettoadd.value
-      if (marketId == null || marketId == "")
+    function updateMoney() {
+      var newMoney = document.money.newmoney.value
+      if (newMoney == null || newMoney == "")
         return false
-      console.log(marketId)
-      console.log(currentCharId)
+      var parsedMoney = getNumber(newMoney)
+      var charObj = new Character({"character_id": currentCharId, "money": parsedMoney})
+      charObj.save({
+        success: function(model) {
+          populateTable()
+        }, failure: function(model, response) {
+          alert(response)
+        }
+      })
+    }
+
+    function getMoney() {
+      var charObj = new Character({"character_id": currentCharId})
+      charObj.fetch({
+        success: function(model) {
+          document.money.newmoney.value = (model.get("money")).toLocaleString()
+        }, failure: function(model, response) {
+          alert(response)
+        }
+      })
+    }
+
+    function addMarket(marketId) {
       var marketObj = new ActiveMarket({"market": marketId, "character": currentCharId, "quantity":0})
       marketObj.create({
         success: function(model) {
@@ -50,6 +71,35 @@
       return false   
     }
 
+    function populateMarkets() {
+      var query = new StackMob.Model.Query()
+      query.select("market_id")
+      query.select("commodity")
+      var market = new Market({})
+      market.query(query, {success: function(models) {
+        var li = models.toJSON()
+        var div = document.getElementById("markets")
+        $.each(li, function(key, value) {
+          console.log(value.commodity)
+          var link = document.createElement('a')
+          link.title = value["commodity"]
+          link.innerHTML = link.title
+          link.className = "add_market"
+          link.href = "#"
+          link.onclick = function(id) {
+            return function() {
+              addMarket(id)
+            }
+          } (value.market_id)
+          var br = document.createElement('br')
+          div.appendChild(link)
+          div.appendChild(br)
+        })
+      }, failure: function(model, response) {
+        alert(response)
+      }})
+    }
+
     function populateTable() {
       console.log("Calling populate")
       populate("markets_info", 
@@ -58,15 +108,17 @@
         "detail.html", 
         [{name: "market", type: "text"},
           {name: "quantity", type: "input"},
-          {name: "invested", type: "text"}],
+          {name: "invested", type: "number"}],
         update
       )
       netWorth()
+      getMoney()
     }
 
     $(document).ready(function() {
       checkLogin()
       populateTable()
+      populateMarkets()
     })
   </script>
 
@@ -95,7 +147,12 @@
     </tbody>
   </table>
 
-  <form name="add_market"><input type="text" name="markettoadd"><input type="submit" onclick="addMarket(); return false" value="Add Market ID"></form>
+  <form name="money"><input type="text" name="newmoney"><input type="submit" onclick="updateMoney(); return false" value="Update Kinah"></form>
+
+  <br>
+  <hr>
+  Add Markets:<br>
+  <div id="markets"></div>
 </body>
 
 </html>

@@ -97,7 +97,7 @@ function populate(tableBodyId, method, idToPass, linkUrl, cells, updateFn) {
               break;
             case 'input':
               var input = document.createElement("input")
-              input.setAttribute("value", cellValue)
+              input.setAttribute("value", cellValue.toLocaleString())
               input.id = obj.id+cellName
               console.log(obj.id+cellName)
               newCell.appendChild(input)
@@ -141,6 +141,6 @@ function netWorth() {
     {},
     'GET',
     {success: function(result) {
-      document.getElementById("net_worth").innerHTML = (Math.floor(result.worth/10000)/100).toLocaleString()+"m"
+      document.getElementById("net_worth").innerHTML = (Math.floor(result.worth/10000)/100).toLocaleString()+" Million"
     }})
 }
