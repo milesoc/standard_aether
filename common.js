@@ -26,7 +26,6 @@ var ActiveMarket = StackMob.Model.extend({
 
 function checkLogin() {
   //redirect to login if not logged in
-  console.log("test")
   StackMob.isLoggedIn({
     yes: function(username) {
       console.log(username + " is logged in.");
@@ -45,7 +44,6 @@ function getNumber(str) {
 }
 
 function populate(tableBodyId, method, idToPass, linkUrl, cells, updateFn) {
-  console.log("calling custom code to populate table")
   var params = {}
   if (idToPass != null)
     params = {'id': idToPass}
@@ -56,9 +54,7 @@ function populate(tableBodyId, method, idToPass, linkUrl, cells, updateFn) {
     {success: function(result) {
       var oldBody = document.getElementById(tableBodyId)
       var newBody = document.createElement('tbody')
-      console.log("called custom code method " + method)
       var objects = result.result
-      console.log(objects.length + " objects(s)")
 
       for(var objectsIndex = 0; objectsIndex < objects.length; objectsIndex++) {
         var obj = objects[objectsIndex]
@@ -88,7 +84,6 @@ function populate(tableBodyId, method, idToPass, linkUrl, cells, updateFn) {
               break;
             case 'trend':
               var trend = document.createTextNode((cellValue).toLocaleString())
-              console.log(cellValue > 0)
               if (cellValue > 0)
                 newCell.className = "positive"
               else if (cellValue < 0)
@@ -99,7 +94,6 @@ function populate(tableBodyId, method, idToPass, linkUrl, cells, updateFn) {
               var input = document.createElement("input")
               input.setAttribute("value", cellValue.toLocaleString())
               input.id = obj.id+cellName
-              console.log(obj.id+cellName)
               newCell.appendChild(input)
               break;
             default:
@@ -141,8 +135,6 @@ function netWorth() {
     {},
     'GET',
     {success: function(result) {
-      console.log(result.worth)
-      console.log(result.money + " money")
       var netWorth = (Math.floor(result.worth/10000)/100)
       document.getElementById("net_worth").innerHTML = netWorth.toLocaleString()+" Million"
       var liquidity = Math.floor(100*result.money/result.worth)

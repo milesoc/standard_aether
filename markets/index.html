@@ -45,8 +45,6 @@
     }
 
     function update(idToUpdate) {
-      console.log(idToUpdate+"price")
-      console.log(document.getElementById(idToUpdate+"price").value)
       var newPrice = parseInt(getNumber(document.getElementById(idToUpdate+"price").value))
       
       var priceObj = new Price({'market': idToUpdate, 'price': newPrice})
@@ -61,7 +59,6 @@
     }
 
     function populateTable() {
-      console.log("Calling populate")
       populate("markets_info", 
         "markets", 
         null,

@@ -80,7 +80,6 @@
         var li = models.toJSON()
         var div = document.getElementById("markets")
         $.each(li, function(key, value) {
-          console.log(value.commodity)
           var link = document.createElement('a')
           link.title = value["commodity"]
           link.innerHTML = link.title
@@ -101,7 +100,6 @@
     }
 
     function populateTable() {
-      console.log("Calling populate")
       populate("markets_info", 
         "character_markets",
         currentCharId, 
