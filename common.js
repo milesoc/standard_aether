@@ -135,8 +135,8 @@ function netWorth() {
     {},
     'GET',
     {success: function(result) {
-      var netWorth = (Math.floor(result.worth/10000)/100)
-      document.getElementById("net_worth").innerHTML = netWorth.toLocaleString()+" Million"
+      var netWorth = (Math.floor(result.worth/100)/10)
+      document.getElementById("net_worth").innerHTML = netWorth.toLocaleString()+" Thousand"
       var liquidity = Math.floor(100*result.money/result.worth)
       var liqTd = document.getElementById("liquidity")
       if (liquidity >= 30)
